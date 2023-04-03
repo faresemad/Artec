@@ -1,14 +1,14 @@
 from rest_framework import viewsets
-from .serializers import CollegeSerializer, CollegeDepartmentSerializer
-from .models import College, CollegeDepartment
+from .serializers import CollegeSerializer
+from .models import College
 
 class CollegeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = College.objects.all()
     serializer_class = CollegeSerializer
 
-class CollegeDepartmentViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = CollegeDepartment.objects.all()
-    serializer_class = CollegeDepartmentSerializer
+# class CollegeDepartmentViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = CollegeDepartment.objects.all()
+#     serializer_class = CollegeDepartmentSerializer
 
 
 # class CollegeDepartmentViewSet(viewsets.ReadOnlyModelViewSet):
