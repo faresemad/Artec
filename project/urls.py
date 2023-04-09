@@ -8,6 +8,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path('api/v1/colleges/', include("colleges.urls")),
     path('api/v1/exams/', include("exams.urls")),
+    path('api/v1/settings/', include("settings.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
