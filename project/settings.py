@@ -1,5 +1,7 @@
 from pathlib import Path
 from environs import Env
+from datetime import timedelta
+
 env = Env()
 env.read_env()
 
@@ -30,6 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party App
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'djoser',
     # Local App
     'user.apps.UserConfig',
     'colleges.apps.CollegesConfig',
@@ -42,6 +47,14 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
 }
 
 MIDDLEWARE = [
