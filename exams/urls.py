@@ -1,5 +1,4 @@
 from rest_framework_nested.routers import NestedDefaultRouter, DefaultRouter
-from colleges.views import CollegeViewSet
 from .views import *
 
 router = DefaultRouter()
