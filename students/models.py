@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
 from colleges.models import College
 from exams.models import MCQExam, HandDrawingExam, DigitalDrawingExam, PracticeDrawingExam
@@ -14,7 +15,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student')
     full_name = models.CharField(max_length=100)
     student_photo = models.ImageField(upload_to='student/%y/%m/%d/', unique=True)
-    national_id = models.CharField(max_length=14, unique=True)
+    national_id = models.CharField(max_length=14, unique=True,validators=[RegexValidator(regex='^.{14}$', message='National ID must be 14 digits', code='nomatch')])
     seat_number = models.IntegerField(unique=True)
     total = models.DecimalField(decimal_places=2, max_digits=10)
     division = models.CharField(max_length=100, choices=division_option)
@@ -37,6 +38,7 @@ class McqAnswer(models.Model):
     
     class Meta:
         verbose_name_plural = "Student Answer Mcq"
+        unique_together = ('student', 'question')
 
     def __str__(self):
         return self.answer

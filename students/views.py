@@ -4,20 +4,49 @@ from .models import *
 
 class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
-    queryset = Student.objects.all()
+    def get_queryset(self):
+        return Student.objects.filter(user=self.request.user.id)
 
 class McqAnswerViewSet(viewsets.ModelViewSet):
     serializer_class = McqAnswerSerializer
-    queryset = McqAnswer.objects.all()
+    
+    def get_queryset(self):
+        return McqAnswer.objects.filter(student=self.request.user.id)
+    
+    def get_serializer_context(self):
+        context = super(McqAnswerViewSet, self).get_serializer_context()
+        context['student'] = self.request.user
+        return context
 
 class HandDrawingAnswerViewSet(viewsets.ModelViewSet):
     serializer_class = HandDrawingSerializer
-    queryset = HandDrawingAnswer.objects.all()
+    
+    def get_queryset(self):
+        return HandDrawingAnswer.objects.filter(student=self.request.user.id)
+
+    def get_serializer_context(self):
+        context = super(HandDrawingAnswerViewSet, self).get_serializer_context()
+        context['student'] = self.request.user
+        return context
 
 class DigitalDrawingAnswerViewSet(viewsets.ModelViewSet):
     serializer_class = DigitalSerializer
-    queryset = DigitalDrawingAnswer.objects.all()
+    
+    def get_queryset(self):
+        return DigitalDrawingAnswer.objects.filter(student=self.request.user.id)
+    
+    def get_serializer_context(self):
+        context = super(DigitalDrawingAnswerViewSet, self).get_serializer_context()
+        context['student'] = self.request.user
+        return context
 
 class PracticeDrawingAnswerViewSet(viewsets.ModelViewSet):
     serializer_class = PracticeSerializer
-    queryset = PracticeDrawingAnswer.objects.all()
+    
+    def get_queryset(self):
+        return PracticeDrawingAnswer.objects.filter(student=self.request.user.id)
+
+    def get_serializer_context(self):
+        context = super(PracticeDrawingAnswerViewSet, self).get_serializer_context()
+        context['student'] = self.request.user
+        return context
