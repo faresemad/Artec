@@ -1,13 +1,18 @@
-from rest_framework import viewsets
 from .serializers import *
 from .models import *
+from .premission import CreateRetrieveUpdate
 
-class StudentViewSet(viewsets.ModelViewSet):
+class StudentViewSet(CreateRetrieveUpdate):
     serializer_class = StudentSerializer
     def get_queryset(self):
         return Student.objects.filter(user=self.request.user.id)
+    
+    def get_serializer_context(self):
+        context = super(StudentViewSet, self).get_serializer_context()
+        context['user'] = self.request.user
+        return context
 
-class McqAnswerViewSet(viewsets.ModelViewSet):
+class McqAnswerViewSet(CreateRetrieveUpdate):
     serializer_class = McqAnswerSerializer
     
     def get_queryset(self):
@@ -18,7 +23,7 @@ class McqAnswerViewSet(viewsets.ModelViewSet):
         context['student'] = self.request.user
         return context
 
-class HandDrawingAnswerViewSet(viewsets.ModelViewSet):
+class HandDrawingAnswerViewSet(CreateRetrieveUpdate):
     serializer_class = HandDrawingSerializer
     
     def get_queryset(self):
@@ -29,7 +34,7 @@ class HandDrawingAnswerViewSet(viewsets.ModelViewSet):
         context['student'] = self.request.user
         return context
 
-class DigitalDrawingAnswerViewSet(viewsets.ModelViewSet):
+class DigitalDrawingAnswerViewSet(CreateRetrieveUpdate):
     serializer_class = DigitalSerializer
     
     def get_queryset(self):
@@ -40,7 +45,7 @@ class DigitalDrawingAnswerViewSet(viewsets.ModelViewSet):
         context['student'] = self.request.user
         return context
 
-class PracticeDrawingAnswerViewSet(viewsets.ModelViewSet):
+class PracticeDrawingAnswerViewSet(CreateRetrieveUpdate):
     serializer_class = PracticeSerializer
     
     def get_queryset(self):

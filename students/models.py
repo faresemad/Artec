@@ -27,6 +27,7 @@ class Student(models.Model):
     
     class Meta:
         verbose_name_plural = "Students"
+        unique_together = ('seat_number', 'national_id', 'phone_number')
 
 
 class McqAnswer(models.Model):
@@ -88,5 +89,9 @@ class StudentResults(models.Model):
     trial_result = models.IntegerField(null=True, blank=True, default=0)
     up_to_level = models.BooleanField(default=False)
     
+    def __str__(self):
+        return self.user.full_name
+    
     class Meta:
         verbose_name_plural = "Student Results"
+        unique_together = ('user', 'mcq_result', 'digital_art_result', 'hand_drawing_result', 'trial_result')

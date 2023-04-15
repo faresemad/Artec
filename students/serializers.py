@@ -2,31 +2,52 @@ from rest_framework import serializers
 from .models import *
 
 class StudentSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.none())
+    college = serializers.PrimaryKeyRelatedField(queryset=College.objects.none())
     class Meta:
         model = Student
         fields = '__all__'
+    
+    def __init__(self, instance=None, **kwargs):
+        super(StudentSerializer, self).__init__(instance, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(id=self.context['request'].user.id)
+        self.fields['college'].queryset = College.objects.filter(id=self.context['request'].user.student.college.id)
+
+    def create(self, validated_data):
+        return Student.objects.create(**validated_data)
 
 class McqAnswerSerializer(serializers.ModelSerializer):
     question = serializers.PrimaryKeyRelatedField(queryset=MCQExam.objects.none())
-    # student = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    is_correct = serializers.SerializerMethodField()
+
     class Meta:
         model = McqAnswer
-        fields = ['question', 'answer']
-        
+        fields = ['question', 'answer', 'is_correct']
+
     def __init__(self, *args, **kwargs):
         super(McqAnswerSerializer, self).__init__(*args, **kwargs)
         self.fields['question'].queryset = MCQExam.objects.filter(college=self.context['request'].user.student.college)
-    
+
+    def get_is_correct(self, obj):
+        return obj.is_correct
+
     def create(self, validated_data):
         validated_data['student'] = self.context['request'].user.student
         try:
             answer = McqAnswer.objects.get(student=validated_data['student'], question=validated_data['question'])
             answer.answer = validated_data['answer']
-            answer.save()
-            return answer
-        
         except McqAnswer.DoesNotExist:
-            return McqAnswer.objects.create(**validated_data)
+            answer = McqAnswer.objects.create(**validated_data)
+        answer.is_correct = self.check_answer(answer)
+        answer.save()
+        return answer
+
+    def check_answer(self, answer_instance):
+        mcq_exam = answer_instance.question
+        if answer_instance.answer == mcq_exam.answer:
+            return True
+        else:
+            return False
 
 class HandDrawingSerializer(serializers.ModelSerializer):
     hand_draw = serializers.PrimaryKeyRelatedField(queryset=HandDrawingExam.objects.none())
