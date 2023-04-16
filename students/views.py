@@ -55,3 +55,15 @@ class PracticeDrawingAnswerViewSet(CreateRetrieveUpdate):
         context = super(PracticeDrawingAnswerViewSet, self).get_serializer_context()
         context['student'] = self.request.user
         return context
+
+class StudentResultsViewSet(CreateRetrieveUpdate):
+    serializer_class = StudentResultsSerializer
+    
+    def get_queryset(self):
+        student_id = Student.objects.get(user_id=self.request.user.id).id
+        return StudentResults.objects.filter(user_id=student_id)
+    
+    # def get_serializer_context(self):
+    #     context = super(StudentResultsViewSet, self).get_serializer_context()
+    #     context['student'] = self.request.user
+    #     return context

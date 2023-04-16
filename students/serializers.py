@@ -109,3 +109,16 @@ class PracticeSerializer(serializers.ModelSerializer):
         
         except PracticeDrawingAnswer.DoesNotExist:
             return PracticeDrawingAnswer.objects.create(**validated_data)
+
+
+class StudentResultsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentResults
+        fields = ['user', 'mcq_result', 'digital_art_result', 'hand_drawing_result', 'trial_result', 'up_to_level']
+    
+    def __init__(self, *args, **kwargs):
+        super(StudentResultsSerializer, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = Student.objects.filter(user_id=self.context['request'].user.id)
+
+    def create(self, validated_data):
+        return StudentResults.objects.create(**validated_data)

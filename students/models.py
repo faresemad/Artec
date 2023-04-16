@@ -42,7 +42,7 @@ class McqAnswer(models.Model):
         unique_together = ('student', 'question')
 
     def __str__(self):
-        return self.answer
+        return self.student.full_name
 
 
 class HandDrawingAnswer(models.Model):
@@ -54,7 +54,7 @@ class HandDrawingAnswer(models.Model):
         verbose_name_plural = "Student Answer Hand Drawing"
 
     def __str__(self):
-        return self.answer
+        return self.student.full_name
 
 
 class DigitalDrawingAnswer(models.Model):
@@ -66,7 +66,7 @@ class DigitalDrawingAnswer(models.Model):
         verbose_name_plural = "Student Answer Digital Drawing"
 
     def __str__(self):
-        return self.answer
+        return self.student.full_name
 
 
 class PracticeDrawingAnswer(models.Model):
@@ -78,7 +78,7 @@ class PracticeDrawingAnswer(models.Model):
         verbose_name_plural = "Student Answer Practice Drawing"
 
     def __str__(self):
-        return self.answer
+        return self.student
 
 
 class StudentResults(models.Model):

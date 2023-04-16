@@ -26,4 +26,7 @@ class PracticeDrawingAnswerAdmin(admin.ModelAdmin):
     list_display = ('student', 'practice_draw', 'answer')
     search_fields = ('student', 'practice_draw', 'answer')
 
-admin.site.register(StudentResults)
+@admin.register(StudentResults)
+class ResultsAdmin(admin.ModelAdmin):
+    list_display = ('user','mcq_result','digital_art_result','hand_drawing_result','trial_result', 'up_to_level')
+    search_fields = ('user',)
