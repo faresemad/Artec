@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.db.models import Sum
+
 from .models import *
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -15,6 +17,20 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Student.objects.create(**validated_data)
+    
+    def update_up_to_level(self, student):
+        score_sum = student.student_mcq.aggregate(Sum('score'))['score__sum']
+        if score_sum is None:
+            score_sum = 0
+        if score_sum >= 3 and score_sum <= 5:
+            student.up_to_level = True
+        else:
+            student.up_to_level = False
+        student.save()
+    
+    def to_representation(self, instance):
+        self.update_up_to_level(instance)
+        return super().to_representation(instance)
 
 class McqAnswerSerializer(serializers.ModelSerializer):
     question = serializers.PrimaryKeyRelatedField(queryset=MCQExam.objects.none())
@@ -35,19 +51,21 @@ class McqAnswerSerializer(serializers.ModelSerializer):
         validated_data['student'] = self.context['request'].user.student
         try:
             answer = McqAnswer.objects.get(student=validated_data['student'], question=validated_data['question'])
+            prev_answer = answer.answer
             answer.answer = validated_data['answer']
+            if answer.answer == answer.question.answer:
+                if prev_answer != answer.answer:
+                    answer.score += 1
+            else:
+                if prev_answer == answer.question.answer:
+                    answer.score -= 1
         except McqAnswer.DoesNotExist:
             answer = McqAnswer.objects.create(**validated_data)
-        answer.is_correct = self.check_answer(answer)
+            if answer.answer == answer.question.answer:
+                answer.score += 1
+        answer.is_correct = answer.answer == answer.question.answer
         answer.save()
         return answer
-
-    def check_answer(self, answer_instance):
-        mcq_exam = answer_instance.question
-        if answer_instance.answer == mcq_exam.answer:
-            return True
-        else:
-            return False
 
 class HandDrawingSerializer(serializers.ModelSerializer):
     hand_draw = serializers.PrimaryKeyRelatedField(queryset=HandDrawingExam.objects.none())
@@ -109,7 +127,6 @@ class PracticeSerializer(serializers.ModelSerializer):
         
         except PracticeDrawingAnswer.DoesNotExist:
             return PracticeDrawingAnswer.objects.create(**validated_data)
-
 
 class StudentResultsSerializer(serializers.ModelSerializer):
     class Meta:
