@@ -4,11 +4,19 @@ from django.db.models import Sum
 from .models import *
 
 class StudentSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.none())
-    college = serializers.PrimaryKeyRelatedField(queryset=College.objects.none())
+    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.none(), required=False)
+    # college = serializers.PrimaryKeyRelatedField(queryset=College.objects.none(), required=False)
+    user = serializers.SerializerMethodField()
+    college = serializers.SerializerMethodField()
     class Meta:
         model = Student
         fields = '__all__'
+        read_only_fields = ['up_to_level','user', 'college']
+
+    def get_user(self, obj):
+        return obj.user.email
+    def get_college(self, obj):
+        return obj.college.name
     
     def __init__(self, instance=None, **kwargs):
         super(StudentSerializer, self).__init__(instance, **kwargs)

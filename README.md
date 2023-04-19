@@ -1,4 +1,6 @@
-# Artech Graduation Project
+# <img src'static\app\logo.ico'> Artech Graduation Project
+## Description
+This is a graduation project for Artech company. This project is a website for selling art. This project is made by Django framework and Python programming language. This project is made by [Fares Emad](
 
 ## Installation
 
@@ -17,3 +19,4 @@
 - ```python manage.py migrate```
 
 - ```python manage.py runserver```
+
