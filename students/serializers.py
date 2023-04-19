@@ -128,7 +128,13 @@ class PracticeSerializer(serializers.ModelSerializer):
         except PracticeDrawingAnswer.DoesNotExist:
             return PracticeDrawingAnswer.objects.create(**validated_data)
 
+class UserResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id','full_name']
+
 class StudentResultsSerializer(serializers.ModelSerializer):
+    user = UserResultSerializer(read_only=True)
     class Meta:
         model = StudentResults
         fields = ['user', 'mcq_result', 'digital_art_result', 'hand_drawing_result', 'trial_result', 'up_to_level']

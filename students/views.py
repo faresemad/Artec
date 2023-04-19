@@ -5,7 +5,7 @@ from .premission import CreateRetrieveUpdate, RetrieveUpdate
 class StudentViewSet(RetrieveUpdate):
     serializer_class = StudentSerializer
     def get_queryset(self):
-        return Student.objects.filter(user=self.request.user.student.id)
+        return Student.objects.filter(id=self.request.user.student.id)
 
 class McqAnswerViewSet(CreateRetrieveUpdate):
     serializer_class = McqAnswerSerializer
@@ -51,7 +51,7 @@ class PracticeDrawingAnswerViewSet(CreateRetrieveUpdate):
         context['student'] = self.request.user
         return context
 
-class StudentResultsViewSet(CreateRetrieveUpdate):
+class StudentResultsViewSet(RetrieveUpdate):
     serializer_class = StudentResultsSerializer
     
     def get_queryset(self):
