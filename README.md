@@ -28,9 +28,8 @@ This is a graduation project for Artech company. This project is a website for a
 
 - ```python manage.py runserver```
 
-# Admin Panel & Login Page
-## Admin Panel
+<h1 align="center">Admin Panel</h1>
 <img src='static/app/1.png'>
 
-## Login Page
+<h1 align="center">Login Page</h1>
 <img src='static/app/2.png'>
