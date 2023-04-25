@@ -5,7 +5,6 @@ from colleges.models import College
 from exams.models import MCQExam, HandDrawingExam, DigitalDrawingExam, PracticeDrawingExam
 User = get_user_model()
 
-
 class Student(models.Model):
     division_option = (
         ("1", "رياضة"),
@@ -49,20 +48,20 @@ class McqAnswer(models.Model):
 class HandDrawingAnswer(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE,related_name='hand_sketch_answer')
     hand_draw = models.ForeignKey(HandDrawingExam, on_delete=models.CASCADE,related_name='hand_sketch')
-    answer = models.ImageField(upload_to='student/%y/%m/%d/', unique=True)
+    answer = models.ImageField(upload_to='hand_drawing_answers/%Y/%m/%d')
     score = models.IntegerField(default=0)
     
     class Meta:
         verbose_name_plural = "Student Answer Hand Drawing"
 
     def __str__(self):
-        return self.student.full_name
+        return f"{self.student.full_name} - {self.hand_draw.question}"
 
 
 class DigitalDrawingAnswer(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE,related_name='digital_sketch_answer')
     digital_draw = models.ForeignKey(DigitalDrawingExam, on_delete=models.CASCADE,related_name='digital_sketch')
-    answer = models.ImageField(upload_to='student/%y/%m/%d/', unique=True)
+    answer = models.ImageField(upload_to='digital_drawing_answers/%Y/%m/%d')
     score = models.IntegerField(default=0)
     
     class Meta:
@@ -75,15 +74,14 @@ class DigitalDrawingAnswer(models.Model):
 class PracticeDrawingAnswer(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE,related_name='practice_sketch_answer')
     practice_draw = models.ForeignKey(PracticeDrawingExam, on_delete=models.CASCADE,related_name='practice_sketch')
-    answer = models.ImageField(upload_to='student/%y/%m/%d/', unique=True)
+    answer = models.ImageField(upload_to='practice_drawing_answers/%Y/%m/%d')
     score = models.IntegerField(default=0)
     
     class Meta:
         verbose_name_plural = "Student Answer Practice Drawing"
 
     def __str__(self):
-        return self.student
-
+        return f"{self.student.full_name}"
 
 class StudentResults(models.Model):
     user = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='student_result')
