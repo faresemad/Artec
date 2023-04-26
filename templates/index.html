@@ -1,24 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Artech System</title>
-</head>
-<body>
-    <h1>This Directory Isn't Exist</h1>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  </head>
+  <body>
+    <div class="number">404</div>
+    <div class="text"><span>Ooops...</span><br>page not found</div>
+    <a class="me" href="https://codepen.io/uzcho_/pens/popular/?grid_type=list" target="_blank"></a>
+    
+    <div class="footer">
+        <ul class="social-network social-circle">
+            <li><a class="icoLinkedin" href="https://www.linkedin.com/in/faresemad" title="Linkedin" target="_blank"><i
+                class="fa-brands fa-linkedin"></i></a></li>
+            <li><a class="icoTwitter" href="https://twitter.com/faresemadx" title="Twitter" target="_blank"><i
+                    class="fa-brands fa-twitter"></i></a></li>
+            <li><a class="icoFacebook" href="https://www.facebook.com/faresemadx" title="Facebook" target="_blank"><i
+                    class="fa-brands fa-facebook"></i></a></li>
+            <li><a class="icoInstagram" href="https://www.instagram.com/faresemadx/" title="Instagram" target="_blank"><i
+                    class="fa-brands fa-instagram"></i></a></li>
+            <li><a class="icoGithub" href="https://www.github.com/faresemad/" title="GitHub" target="_blank"><i
+                    class="fa-brands fa-github"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="footer">Created With Love By Fares Emad</div>
     <style>
-        body{
-            background-color: rgba(193, 187, 187, 0.633);
-        }
-        h1{
-            text-align: center;
-            color: rgb(22, 54, 2);
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 50px;
-        }
+        
+        /*=========================
+  Icons
+ ================= */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* footer social icons */
+.footer {
+  background-color: #FAFCFF;
+  padding: 20px 0;
+  text-align: center;
+}
+
+ul.social-network {
+  list-style: none;
+  display: inline;
+  margin: auto;
+}
+ul.social-network li {
+  display: inline;
+  margin: 0 10px;
+}
+
+/* footer social icons */
+.social-network a.icoFacebook:hover {
+  background-color: #3B5998;
+}
+.social-network a.icoTwitter:hover {
+  background-color: #33ccff;
+}
+.social-network a.icoMedium:hover {
+  background-color: #00AB6C;
+}
+.social-network a.icoQuora:hover {
+  background-color: #AA2200;
+}
+.social-network a.icoLinkedin:hover {
+  background-color: #007bb7;
+}
+.social-network a.icoInstagram:hover {
+  background: #f09433;
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f09433", endColorstr="#bc1888", GradientType=1);
+}
+
+.social-network a.icoRss:hover i, .social-network a.icoFacebook:hover i, .social-network a.icoTwitter:hover i, .social-network a.icoMedium:hover i, .social-network a.icoVimeo:hover i, .social-network a.icoLinkedin:hover i {
+  color: #fff;
+}
+
+.social-circle li a {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+}
+
+.social-circle li i {
+  margin: 0;
+  line-height: 60px;
+  text-align: center;
+}
+
+.social-circle li a:hover i, .triggeredHover {
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -ms--transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.social-circle i {
+  color: #fff;
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  -ms-transition: all 0.8s;
+  transition: all 0.8s;
+}
+
+.social-circle a {
+  background-color: #CCD8EA;
+}
+
+@media screen and (max-width: 500px) {
+  ul.social-network li {
+    display: inline;
+    margin: 0 5px;
+  }
+}
+@media screen and (max-width: 450px) {
+  ul.social-network li {
+    display: inline;
+    margin: 0 5px;
+  }
+
+  .social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .social-circle li i {
+    margin: 0;
+    line-height: 40px;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 350px) {
+  ul.social-network li {
+    display: inline;
+    margin: 0 2px;
+  }
+
+  .social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .social-circle li i {
+    margin: 0;
+    line-height: 40px;
+    text-align: center;
+  }
+}
+   body {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+div {
+  width: 100%;
+  text-align: center;
+}
+
+.number {
+  background: #fff;
+  position: relative;
+  font: 900 30vmin "Consolas";
+  letter-spacing: 5vmin;
+  text-shadow: 2px -1px 0 #000, 4px -2px 0 #0a0a0a, 6px -3px 0 #0f0f0f, 8px -4px 0 #141414, 10px -5px 0 #1a1a1a, 12px -6px 0 #1f1f1f, 14px -7px 0 #242424, 16px -8px 0 #292929;
+}
+.number::before {
+  background-color: #673ab7;
+  background-image: radial-gradient(closest-side at 50% 50%, #ffc107 100%, rgba(0, 0, 0, 0)), radial-gradient(closest-side at 50% 50%, #e91e63 100%, rgba(0, 0, 0, 0));
+  background-repeat: repeat-x;
+  background-size: 40vmin 40vmin;
+  background-position: -100vmin 20vmin, 100vmin -25vmin;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen;
+  -webkit-animation: moving 10s linear infinite both;
+          animation: moving 10s linear infinite both;
+  display: block;
+  position: absolute;
+  content: "";
+}
+@-webkit-keyframes moving {
+  to {
+    background-position: 100vmin 20vmin, -100vmin -25vmin;
+  }
+}
+@keyframes moving {
+  to {
+    background-position: 100vmin 20vmin, -100vmin -25vmin;
+  }
+}
+
+.text {
+  font: 400 5vmin "Courgette";
+}
+.text span {
+  font-size: 10vmin;
+}
     </style>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+  </body>
 </html>
