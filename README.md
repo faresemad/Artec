@@ -33,3 +33,12 @@ This is a graduation project for Artech company. This project is a website for a
 
 <h1 align="center">Login Page</h1>
 <img src='static/app/2.png'>
+
+<h1 align="center">Auth Popup</h1>
+<img src='static/app/3.png'>
+
+<h1 align="center">Not Found Page</h1>
+<img src='static/app/4.png'>
+
+<h1 align="center">Swagger Page</h1>
+<img src='static/app/5.png'>

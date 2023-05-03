@@ -244,7 +244,7 @@ DJOSER = {
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
         'user_list': 'djoser.serializers.UserSerializer',
         'user_password': 'djoser.serializers.UserPasswordSerializer',
-        'user_reset_password': 'djoser. serializers.UserPasswordResetSerializer',
+        'user_reset_password': 'djoser.serializers.UserPasswordResetSerializer',
         'username_reset': 'djoser.serializers.UsernameResetSerializer',
         'password_reset': 'djoser.serializers.PasswordResetSerializer',
         'password_reset_confirm': 'djoser.serializers.PasswordResetConfirmSerializer',
