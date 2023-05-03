@@ -20,7 +20,7 @@ urlpatterns = [
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     # Invalid path
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    re_path(r'^$', TemplateView.as_view(template_name='index.html')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -46,26 +46,54 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ),
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
+# SIMPLE_JWT = {
+#     'AUTH_HEADER_TYPES': ('JWT',),
+#     "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+# }
+#----------------------------------------------------------------------
+JWT_AUTH = {
+    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_PUBLIC_KEY': None,
+    'JWT_PRIVATE_KEY': None,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': timedelta(hours=1),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
     "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_AUTH_COOKIE': None,
 }
 
+#----------------------------------------------------------------------
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Artech API',
     'DESCRIPTION': 'Automatic assessment of artistic colleges aptitude test using deep learning',
-    'VERSION': '1.0.0',
+    'VERSION': '1.7.23',
     'SERVE_INCLUDE_SCHEMA': False,
     'SWAGGER_UI_DIST': 'SIDECAR',
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
@@ -151,6 +179,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT= BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = 'media/'
@@ -168,25 +197,63 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+########################################################################
+########################################################################
 DJOSER = {
-    "LOGIN_FIELD": 'email',
-    "USER_CREATE_PASSWORD_RETYPE": True,
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
-    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    "SEND_CONFIRMATION_EMAIL": True,
-    "SET_USERNAME_RETYPE": True,
-    "SET_PASSWORD_RETYPE": True,
-    "PASSWORD_RESET_CONFIRM_URL": "password/reset/{uid}/{token}",
-    "USERNAME_RESET_CONFIRM_URL": "email/reset/{uid}/{token}",
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {
-        "user_create":"user.serializers.UserCreateSerializer",
-        "user":"user.serializers.UserCreateSerializer",
-        "user_delete":"djoser.serializers.UserDeleteSerializer",
+    'HIDE_USERS': False,
+    'PERMISSIONS': {
+        'user_create': ['rest_framework.permissions.AllowAny'],
     },
-}
+    # 'SEND_ACTIVATION_EMAIL': True,
+    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
+    # 'SEND_CONFIRMATION_EMAIL': True,
+    # 'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    # 'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    # 'SET_PASSWORD_RETYPE': True,
+    # 'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    # 'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    # 'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'LOGIN_FIELD': 'email',
+    'USER_ID_FIELD': 'id',
+    # 'AUTH_TOKEN_CONFIRMATION_EXPIRATION': None,
+    # 'PASSWORD_RESET_CONFIRM_TOKEN_EXPIRATION': None,
+    # 'USERNAME_RESET_CONFIRM_TOKEN_EXPIRATION': None,
+    # 'ACTIVATION_TOKEN_EXPIRATION': None,
+    # 'SEND_CONFIRMATION_SET_PASSWORD_EMAIL': True,
+    # 'SET_USERNAME_RETYPE': True,
+    # 'SET_EMAIL_RETYPE': True,
+    # 'TOKEN_MODEL': None,
+    # 'LOGIN_AFTER_ACTIVATION': True,
+    # 'LOGIN_AFTER_REGISTRATION': True,
+    # 'TOKEN_AUTH_HEADER_PREFIX': 'Bearer',
+    'TOKEN_AUTH_COOKIE': False,
+    'TOKEN_CREATE_REFRESH': False,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'TOKEN_STRATEGY': 'djoser.token.jwt.Token',
+    'USERNAME_RESET_CONFIRM_RETYPE': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_EMAIL_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'LOGOUT_ON_PASSWORD_CHANGE': False,
+    'SERIALIZERS': {
+        'current_user': 'user.serializers.UserSerializer',
+        'user': 'user.serializers.UserCreateSerializer',
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+        'user_list': 'djoser.serializers.UserSerializer',
+        'user_password': 'djoser.serializers.UserPasswordSerializer',
+        'user_reset_password': 'djoser. serializers.UserPasswordResetSerializer',
+        'username_reset': 'djoser.serializers.UsernameResetSerializer',
+        'password_reset': 'djoser.serializers.PasswordResetSerializer',
+        'password_reset_confirm': 'djoser.serializers.PasswordResetConfirmSerializer',
+        'set_password': 'djoser.serializers.SetPasswordSerializer',
+        'token_create': 'djoser.serializers.TokenCreateSerializer',
+        'token_refresh': 'djoser.serializers.TokenRefreshSerializer',
+        'token_verify': 'djoser.serializers.TokenVerifySerializer',
+        }
+    }
 ########################################################################
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
