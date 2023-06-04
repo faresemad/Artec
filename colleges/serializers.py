@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import College, CollegeDepartment
 
-# College Serializer class
-
 class CollegeDepartmentSerializer(serializers.ModelSerializer):
     college_name = serializers.SerializerMethodField()
 

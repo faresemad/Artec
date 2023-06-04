@@ -4,8 +4,6 @@ from django.db.models import Sum
 from .models import *
 
 class StudentSerializer(serializers.ModelSerializer):
-    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.none(), required=False)
-    # college = serializers.PrimaryKeyRelatedField(queryset=College.objects.none(), required=False)
     user = serializers.SerializerMethodField()
     college = serializers.SerializerMethodField()
     class Meta:

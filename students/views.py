@@ -2,7 +2,7 @@ from .serializers import *
 from .models import *
 from .premission import CreateRetrieveUpdate, RetrieveUpdate
 
-class StudentViewSet(RetrieveUpdate):
+class StudentViewSet(CreateRetrieveUpdate):
     serializer_class = StudentSerializer
     def get_queryset(self):
         return Student.objects.filter(id=self.request.user.student.id)
