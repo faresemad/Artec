@@ -10,4 +10,4 @@
 # exam_router.register('hand-drawing', HandDrawingViewSet, basename='hand-exam')
 # exam_router.register('practice-drawing', PracticeDrawingViewSet, basename='practic-exam')
 
-# urlpatterns = router.urls + exam_router.urls 
+# urlpatterns = router.urls + exam_router.urls
