@@ -7,7 +7,12 @@ class StudentViewSet(CreateRetrieveUpdate):
     serializer_class = StudentSerializer
 
     def get_queryset(self):
-        return Student.objects.filter(id=self.request.user.student.id)
+        return Student.objects.all()
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
 
 
 class McqAnswerViewSet(CreateRetrieveUpdate):

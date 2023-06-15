@@ -14,7 +14,7 @@ User = get_user_model()
 
 class Student(models.Model):
     division_option = (("1", "رياضة"), ("2", "علوم"), ("3", "ادبي"))
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=False)
     full_name = models.CharField(max_length=100)
     student_photo = models.ImageField(upload_to="student/%y/%m/%d/", unique=True)
     national_id = models.CharField(

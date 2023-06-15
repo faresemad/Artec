@@ -1,17 +1,15 @@
 from rest_framework import serializers
 from django.db.models import Sum
-
+from colleges.serializers import CollegeSerializer
 from .models import *
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-    college = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
         fields = "__all__"
-        read_only_fields = ["up_to_level", "user", "college"]
+        read_only_fields = ["up_to_level", "user"]
 
     def get_user(self, obj):
         return obj.user.email
@@ -24,12 +22,21 @@ class StudentSerializer(serializers.ModelSerializer):
         self.fields["user"].queryset = User.objects.filter(
             id=self.context["request"].user.id
         )
-        self.fields["college"].queryset = College.objects.filter(
-            id=self.context["request"].user.student.college.id
-        )
-
+    
     def create(self, validated_data):
-        return Student.objects.create(**validated_data)
+        user = self.context['request'].user
+        student = user.student
+        if student is not None:
+            # update existing student object
+            student.full_name = validated_data.get('full_name', student.full_name)
+            student.student_photo = validated_data.get('student_photo', student.student_photo)
+            # update other fields as needed
+            student.save()
+            return student
+        else:
+            # create new student object
+            validated_data['user'] = user
+            return super().create(validated_data)
 
     def update_up_to_level(self, student):
         score_sum = student.student_mcq.aggregate(Sum("score"))["score__sum"]
