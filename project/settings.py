@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     'djoser',
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'notifications',
     # Local App
     'user.apps.UserConfig',
     'colleges.apps.CollegesConfig',
     'exams.apps.ExamsConfig',
     'students.apps.StudentsConfig',
     'settings.apps.SettingsConfig',
+    'notification.apps.NotificationConfig',
 ]
 
 REST_FRAMEWORK = {
