@@ -14,7 +14,9 @@ User = get_user_model()
 
 class Student(models.Model):
     division_option = (("1", "رياضة"), ("2", "علوم"), ("3", "ادبي"))
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=False)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="student", null=False
+    )
     full_name = models.CharField(max_length=100)
     student_photo = models.ImageField(upload_to="student/%y/%m/%d/", unique=True)
     national_id = models.CharField(
@@ -40,7 +42,13 @@ class Student(models.Model):
 
     class Meta:
         verbose_name_plural = "Students"
-        unique_together = ("seat_number", "national_id", "phone_number")
+        unique_together = (
+            "seat_number",
+            "national_id",
+            "phone_number",
+            "user",
+            "college",
+        )
 
 
 class McqAnswer(models.Model):
@@ -54,7 +62,7 @@ class McqAnswer(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Answer Mcq"
-        unique_together = ("student", "question")
+        unique_together = ("student", "question", "answer")
 
     def __str__(self):
         return self.student.full_name
@@ -72,6 +80,7 @@ class HandDrawingAnswer(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Answer Hand Drawing"
+        unique_together = ("student", "hand_draw", "answer")
 
     def __str__(self):
         return f"{self.student.full_name} - {self.hand_draw.question}"
@@ -89,6 +98,7 @@ class DigitalDrawingAnswer(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Answer Digital Drawing"
+        unique_together = ("student", "digital_draw", "answer")
 
     def __str__(self):
         return self.student.full_name
@@ -106,6 +116,7 @@ class PracticeDrawingAnswer(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Answer Practice Drawing"
+        unique_together = ("student", "practice_draw", "answer")
 
     def __str__(self):
         return f"{self.student.full_name}"
