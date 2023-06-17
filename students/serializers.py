@@ -25,7 +25,10 @@ class StudentSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         user = self.context['request'].user
-        student = user.student
+        try:
+            student = user.student
+        except Student.DoesNotExist:
+            student = None
         if student is not None:
             # update existing student object
             student.full_name = validated_data.get('full_name', student.full_name)
