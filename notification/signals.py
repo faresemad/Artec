@@ -29,19 +29,3 @@ def send_notification(sender, instance, created, **kwargs):
             description=f"تم انشاء طالب جديد بإسم '{instance.full_name}'",
             level="success",
         )
-    elif instance.up_to_level:
-        notify.send(
-            sender=instance.user,
-            recipient=instance.user,
-            verb=f"تهانينا{instance.full_name}",
-            description="انت الآن لائق للترقي لهذه الكلية",
-            level="success",
-        )
-    elif not instance.up_to_level:
-        notify.send(
-            sender=instance.user,
-            recipient=instance.user,
-            verb="مازلت غير لائق",
-            description="انت غير لائق للترقي لهذه الكلية",
-            level="warning",
-        )

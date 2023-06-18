@@ -214,7 +214,7 @@ DJOSER = {
     "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND": True,
     "TOKEN_MODEL": False,
     "SERIALIZERS": {
-        "current_user": "user.serializers.UserSerializer",
+        "current_user": "user.serializers.UserCreateSerializer",
     },
 }
 ########################################################################

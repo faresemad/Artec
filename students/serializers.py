@@ -5,7 +5,6 @@ from .models import *
 
 
 class StudentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Student
         fields = "__all__"
@@ -22,35 +21,52 @@ class StudentSerializer(serializers.ModelSerializer):
         self.fields["user"].queryset = User.objects.filter(
             id=self.context["request"].user.id
         )
-    
+
     def create(self, validated_data):
-        user = self.context['request'].user
+        user = self.context["request"].user
         try:
             student = user.student
         except Student.DoesNotExist:
             student = None
         if student is not None:
             # update existing student object
-            student.full_name = validated_data.get('full_name', student.full_name)
-            student.student_photo = validated_data.get('student_photo', student.student_photo)
+            student.full_name = validated_data.get("full_name", student.full_name)
+            student.student_photo = validated_data.get(
+                "student_photo", student.student_photo
+            )
             # update other fields as needed
             student.save()
             return student
         else:
             # create new student object
-            validated_data['user'] = user
+            validated_data["user"] = user
             return super().create(validated_data)
 
     def update_up_to_level(self, student):
         score_mcq = student.student_mcq.aggregate(Sum("score"))["score__sum"]
-        score_hand_sketch = student.hand_sketch_answer.aggregate(Sum("score"))["score__sum"]
-        score_digital_sketch = student.digital_sketch_answer.aggregate(Sum("score"))["score__sum"]
-        score_practice_sketch = student.practice_sketch_answer.aggregate(Sum("score"))["score__sum"]
-        score_sum = sum(filter(None, [score_mcq, score_hand_sketch, score_digital_sketch, score_practice_sketch]))
+        score_hand_sketch = student.hand_sketch_answer.aggregate(Sum("score"))[
+            "score__sum"
+        ]
+        score_digital_sketch = student.digital_sketch_answer.aggregate(Sum("score"))[
+            "score__sum"
+        ]
+        score_practice_sketch = student.practice_sketch_answer.aggregate(Sum("score"))[
+            "score__sum"
+        ]
+        score_sum = sum(
+            filter(
+                None,
+                [
+                    score_mcq,
+                    score_hand_sketch,
+                    score_digital_sketch,
+                    score_practice_sketch,
+                ],
+            )
+        )
 
         score_sum = score_sum or 0
-        if score_sum >= 30 and score_sum < 300:
-        # if score_sum >= 30:
+        if score_sum >= 150 and score_sum < 400:
             student.up_to_level = True
         else:
             student.up_to_level = False
