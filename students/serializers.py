@@ -1,10 +1,15 @@
+import os
+import uuid
+
+from django.conf import settings
 from rest_framework import serializers
 from django.db.models import Sum
-from colleges.serializers import CollegeSerializer
 from .models import *
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    national_id = serializers.CharField(required=False)
+
     class Meta:
         model = Student
         fields = "__all__"
@@ -40,7 +45,30 @@ class StudentSerializer(serializers.ModelSerializer):
         else:
             # create new student object
             validated_data["user"] = user
+            national_id = validated_data.get("national_id")
+            student_photo = validated_data.get("student_photo")
+            if national_id and student_photo:
+                file_ext = student_photo.name.split(".")[-1]
+                filename = f"{national_id}.{file_ext}"
+                # update path if filename already exists
+                if os.path.exists(
+                    os.path.join(settings.MEDIA_ROOT, "students", filename)
+                ):
+                    filename = f"{national_id}_{uuid.uuid4().hex}.{file_ext}"
+                validated_data["student_photo"].name = filename
             return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        national_id = validated_data.get("national_id")
+        student_photo = validated_data.get("student_photo")
+        if national_id and student_photo:
+            file_ext = student_photo.name.split(".")[-1]
+            filename = f"{national_id}.{file_ext}"
+            # update path if filename already exists
+            if os.path.exists(os.path.join(settings.MEDIA_ROOT, "students", filename)):
+                filename = f"{national_id}_{uuid.uuid4().hex}.{file_ext}"
+            validated_data["student_photo"].name = filename
+        return super().update(instance, validated_data)
 
     def update_up_to_level(self, student):
         score_mcq = student.student_mcq.aggregate(Sum("score"))["score__sum"]
@@ -74,7 +102,11 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         self.update_up_to_level(instance)
-        return super().to_representation(instance)
+        representation = super().to_representation(instance)
+        representation["student_photo_name"] = instance.student_photo.name.split("/")[
+            -1
+        ]
+        return representation
 
 
 class McqAnswerSerializer(serializers.ModelSerializer):
