@@ -1,6 +1,7 @@
 from rest_framework import viewsets
-from .serializers import CollegeSerializer, CollegeDepartmentSerializer
+
 from .models import College, CollegeDepartment
+from .serializers import CollegeDepartmentSerializer, CollegeSerializer
 
 
 class CollegeViewSet(viewsets.ReadOnlyModelViewSet):

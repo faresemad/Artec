@@ -1,9 +1,10 @@
 from django.test import TestCase
+
 from colleges.models import College
 from exams.models import (
-    MCQExam,
     DigitalDrawingExam,
     HandDrawingExam,
+    MCQExam,
     PracticeDrawingExam,
 )
 

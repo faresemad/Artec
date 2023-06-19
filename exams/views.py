@@ -1,6 +1,15 @@
 from rest_framework import viewsets
-from .serializers import *
+
 from colleges.models import College
+from colleges.serializers import CollegeSerializer
+
+from .models import DigitalDrawingExam, HandDrawingExam, MCQExam, PracticeDrawingExam
+from .serializers import (
+    DigitalDrawingExamSerializer,
+    HandDrawingExamSerializer,
+    McqExamSerializer,
+    PracticeDrawingExamSerializer,
+)
 
 
 class McqViewSet(viewsets.ReadOnlyModelViewSet):

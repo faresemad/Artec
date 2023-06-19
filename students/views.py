@@ -1,6 +1,20 @@
-from .serializers import *
-from .models import *
+from .models import (
+    DigitalDrawingAnswer,
+    HandDrawingAnswer,
+    McqAnswer,
+    PracticeDrawingAnswer,
+    Student,
+    StudentResults,
+)
 from .premission import CreateRetrieveUpdate, RetrieveUpdate
+from .serializers import (
+    DigitalSerializer,
+    HandDrawingSerializer,
+    McqAnswerSerializer,
+    PracticeSerializer,
+    StudentResultsSerializer,
+    StudentSerializer,
+)
 
 
 class StudentViewSet(CreateRetrieveUpdate):
@@ -22,7 +36,7 @@ class McqAnswerViewSet(CreateRetrieveUpdate):
         return McqAnswer.objects.filter(student=self.request.user.student.id)
 
     def get_serializer_context(self):
-        context = super(McqAnswerViewSet, self).get_serializer_context()
+        context = super().get_serializer_context()
         context["student"] = self.request.user
         return context
 
@@ -34,7 +48,7 @@ class HandDrawingAnswerViewSet(CreateRetrieveUpdate):
         return HandDrawingAnswer.objects.filter(student=self.request.user.student.id)
 
     def get_serializer_context(self):
-        context = super(HandDrawingAnswerViewSet, self).get_serializer_context()
+        context = super().get_serializer_context()
         context["student"] = self.request.user
         return context
 
@@ -46,7 +60,7 @@ class DigitalDrawingAnswerViewSet(CreateRetrieveUpdate):
         return DigitalDrawingAnswer.objects.filter(student=self.request.user.student.id)
 
     def get_serializer_context(self):
-        context = super(DigitalDrawingAnswerViewSet, self).get_serializer_context()
+        context = super().get_serializer_context()
         context["student"] = self.request.user
         return context
 
@@ -60,7 +74,7 @@ class PracticeDrawingAnswerViewSet(CreateRetrieveUpdate):
         )
 
     def get_serializer_context(self):
-        context = super(PracticeDrawingAnswerViewSet, self).get_serializer_context()
+        context = super().get_serializer_context()
         context["student"] = self.request.user
         return context
 

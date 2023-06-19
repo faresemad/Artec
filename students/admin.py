@@ -1,10 +1,11 @@
 from django.contrib import admin
+
 from .models import (
-    Student,
-    McqAnswer,
-    HandDrawingAnswer,
     DigitalDrawingAnswer,
+    HandDrawingAnswer,
+    McqAnswer,
     PracticeDrawingAnswer,
+    Student,
     StudentResults,
 )
 

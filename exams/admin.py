@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import MCQExam, DigitalDrawingExam, HandDrawingExam, PracticeDrawingExam
+
+from .models import DigitalDrawingExam, HandDrawingExam, MCQExam, PracticeDrawingExam
 
 
 @admin.register(MCQExam)

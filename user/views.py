@@ -1,8 +1,8 @@
 from django.conf import settings
+from django.shortcuts import render
 from djoser.views import UserViewSet as DjoserUserViewSet
 from rest_framework import exceptions, status
 from rest_framework.decorators import action
-from django.shortcuts import render
 from rest_framework.response import Response
 
 
@@ -75,28 +75,28 @@ class UserViewSet(DjoserUserViewSet):
 
 
 def activate_account(request, uid, token):
-    # PROTOCOL = getattr(settings, "PROTOCOL") or "http"
-    # DOMAIN = getattr(settings, "DOMAIN") or "server.modelyagency.com"
+    PROTOCOL = getattr(settings, "PROTOCOL") or "http"
+    DOMAIN = getattr(settings, "DOMAIN") or "localhost:8000"
     return render(
         request,
         "accounts/activate_account.html",
         {
             "uid": uid,
             "token": token,
-            "url": f"http://localhost:8000/user/users/activation/",
+            "url": f"{PROTOCOL}://{DOMAIN}/user/users/activation/",
         },
     )
 
 
 def reset_password_confirm(request, uid, token):
-    # PROTOCOL = getattr(settings, "PROTOCOL") or "http"
-    # DOMAIN = getattr(settings, "DOMAIN") or "server.modelyagency.com"
+    PROTOCOL = getattr(settings, "PROTOCOL") or "http"
+    DOMAIN = getattr(settings, "DOMAIN") or "localhost:8000"
     return render(
         request,
         "accounts/reset_password_confirm.html",
         {
             "uid": uid,
             "token": token,
-            "reset_pass_confirm_url": f"http://localhost:8000/user/users/reset_password_confirm/",
+            "reset_pass_confirm_url": f"{PROTOCOL}://{DOMAIN}/user/users/reset_password_confirm/",
         },
     )

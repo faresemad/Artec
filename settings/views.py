@@ -1,6 +1,7 @@
 from rest_framework import viewsets
-from .serializers import AboutSerializer
+
 from .models import About
+from .serializers import AboutSerializer
 
 
 class AboutViewSet(viewsets.ReadOnlyModelViewSet):

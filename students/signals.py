@@ -1,16 +1,16 @@
+from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth import get_user_model
 from notifications.signals import notify
+
 from students.models import (
-    Student,
-    McqAnswer,
-    HandDrawingAnswer,
     DigitalDrawingAnswer,
+    HandDrawingAnswer,
+    McqAnswer,
     PracticeDrawingAnswer,
+    Student,
     StudentResults,
 )
-
 
 User = get_user_model()
 
@@ -36,9 +36,11 @@ def digital_drawing_result(sender, instance, created, **kwargs):
     student_result.save()
 
 
-@receiver(post_save, sender=PracticeDrawingAnswer, dispatch_uid="practice_drawing_result")
+@receiver(
+    post_save, sender=PracticeDrawingAnswer, dispatch_uid="practice_drawing_result"
+)
 def practice_drawing_result(sender, instance, created, **kwargs):
-    student_result,_ = StudentResults.objects.get_or_create(user=instance.student)
+    student_result, _ = StudentResults.objects.get_or_create(user=instance.student)
     student_result.trial_result = instance.score
     student_result.save()
 

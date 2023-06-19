@@ -1,11 +1,12 @@
 from rest_framework.routers import DefaultRouter
+
 from .views import (
-    StudentViewSet,
-    McqAnswerViewSet,
-    HandDrawingAnswerViewSet,
     DigitalDrawingAnswerViewSet,
+    HandDrawingAnswerViewSet,
+    McqAnswerViewSet,
     PracticeDrawingAnswerViewSet,
     StudentResultsViewSet,
+    StudentViewSet,
 )
 
 router = DefaultRouter()

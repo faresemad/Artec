@@ -1,10 +1,24 @@
-from django.test import TestCase
+import os
+
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
+
 from colleges.models import College
-from exams.models import *
-from .models import *
-import os
+from exams.models import (
+    DigitalDrawingExam,
+    HandDrawingExam,
+    MCQExam,
+    PracticeDrawingExam,
+)
+
+from .models import (
+    DigitalDrawingAnswer,
+    HandDrawingAnswer,
+    McqAnswer,
+    PracticeDrawingAnswer,
+    Student,
+)
 
 User = get_user_model()
 

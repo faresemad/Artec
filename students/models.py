@@ -1,11 +1,12 @@
-from django.db import models
-from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
+from django.core.validators import RegexValidator
+from django.db import models
+
 from colleges.models import College
 from exams.models import (
-    MCQExam,
-    HandDrawingExam,
     DigitalDrawingExam,
+    HandDrawingExam,
+    MCQExam,
     PracticeDrawingExam,
 )
 

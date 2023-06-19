@@ -2,9 +2,27 @@ import os
 import uuid
 
 from django.conf import settings
-from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from django.db.models import Sum
-from .models import *
+from rest_framework import serializers
+
+from exams.models import (
+    DigitalDrawingExam,
+    HandDrawingExam,
+    MCQExam,
+    PracticeDrawingExam,
+)
+
+from .models import (
+    DigitalDrawingAnswer,
+    HandDrawingAnswer,
+    McqAnswer,
+    PracticeDrawingAnswer,
+    Student,
+    StudentResults,
+)
+
+User = get_user_model()
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -22,7 +40,7 @@ class StudentSerializer(serializers.ModelSerializer):
         return obj.college.name
 
     def __init__(self, instance=None, **kwargs):
-        super(StudentSerializer, self).__init__(instance, **kwargs)
+        super().__init__(instance, **kwargs)
         self.fields["user"].queryset = User.objects.filter(
             id=self.context["request"].user.id
         )
@@ -118,7 +136,7 @@ class McqAnswerSerializer(serializers.ModelSerializer):
         fields = ["question", "answer", "is_correct"]
 
     def __init__(self, *args, **kwargs):
-        super(McqAnswerSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["question"].queryset = MCQExam.objects.filter(
             college=self.context["request"].user.student.college
         )
@@ -159,7 +177,7 @@ class HandDrawingSerializer(serializers.ModelSerializer):
         fields = ["hand_draw", "answer"]
 
     def __init__(self, *args, **kwargs):
-        super(HandDrawingSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["hand_draw"].queryset = HandDrawingExam.objects.filter(
             college=self.context["request"].user.student.college
         )
@@ -188,7 +206,7 @@ class DigitalSerializer(serializers.ModelSerializer):
         fields = ["digital_draw", "answer"]
 
     def __init__(self, *args, **kwargs):
-        super(DigitalSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["digital_draw"].queryset = DigitalDrawingExam.objects.filter(
             college=self.context["request"].user.student.college
         )
@@ -218,7 +236,7 @@ class PracticeSerializer(serializers.ModelSerializer):
         fields = ["practice_draw", "answer"]
 
     def __init__(self, *args, **kwargs):
-        super(PracticeSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["practice_draw"].queryset = PracticeDrawingExam.objects.filter(
             college=self.context["request"].user.student.college
         )
@@ -259,7 +277,7 @@ class StudentResultsSerializer(serializers.ModelSerializer):
         ]
 
     def __init__(self, *args, **kwargs):
-        super(StudentResultsSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["user"].queryset = Student.objects.filter(
             user_id=self.context["request"].user.id
         )

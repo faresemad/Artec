@@ -1,6 +1,13 @@
-from rest_framework_nested.routers import NestedDefaultRouter, DefaultRouter
-from .views import CollegeViewSet, CollegeDepartmentViewSet
-from exams.views import *
+from rest_framework_nested.routers import DefaultRouter, NestedDefaultRouter
+
+from exams.views import (
+    DigitalDrawingViewSet,
+    HandDrawingViewSet,
+    McqViewSet,
+    PracticeDrawingViewSet,
+)
+
+from .views import CollegeDepartmentViewSet, CollegeViewSet
 
 router = DefaultRouter()
 

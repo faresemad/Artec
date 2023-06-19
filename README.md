@@ -6,27 +6,28 @@
 [![Account: LinkedIn](https://img.shields.io/badge/Fares%20Emad-LinkedIn-blue)](https://www.linkedin.com/in/faresemad/)
 
 ## Description
+
 This is a graduation project for Artech company. This project is a website for art exams. This project is made by Django framework and Python programming language. This project is made by [Fares Emad](https://github.com/faresemad/)
 
 ## Installation
 
-- Create Virtual Enviroment ```python3 -m venv env```.
+- Create Virtual Enviroment `python3 -m venv env`.
 
-- Activate Enviroment on Linux ```source env/bin/activate```, on Windows ```.env\Scripts\activate```.
+- Activate Enviroment on Linux `source env/bin/activate`, on Windows `.env\Scripts\activate`.
 
-- Download Project ```git clone https://github.com/faresemad/final-art.git```.
+- Download Project `git clone https://github.com/faresemad/final-art.git`.
 
-- ```cd final-art```
+- `cd final-art`
 
-- ```pip install -r requirements.txt```
+- `pip install -r requirements.txt`
 
-- ```python manage.py makemigrations```
+- `python manage.py makemigrations`
 
-- ```python manage.py migrate```
+- `python manage.py migrate`
 
-- ```python manage.py createsuperuser```
+- `python manage.py createsuperuser`
 
-- ```python manage.py runserver```
+- `python manage.py runserver`
 
 <h1 align="center">Admin Panel</h1>
 <img src='static/app/1.png'>

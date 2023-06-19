@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import MCQExam, DigitalDrawingExam, HandDrawingExam, PracticeDrawingExam
+
 from colleges.models import College
+
+from .models import DigitalDrawingExam, HandDrawingExam, MCQExam, PracticeDrawingExam
 
 
 class McqExamSerializer(serializers.ModelSerializer):
