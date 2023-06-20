@@ -137,9 +137,13 @@ class McqAnswerSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["question"].queryset = MCQExam.objects.filter(
-            college=self.context["request"].user.student.college
-        )
+        user = self.context["request"].user
+        if hasattr(user, "student"):
+            self.fields["question"].queryset = MCQExam.objects.filter(
+                college=user.student.college
+            )
+        else:
+            self.fields["question"].queryset = MCQExam.objects.none()
 
     def get_is_correct(self, obj):
         return obj.is_correct
@@ -178,9 +182,13 @@ class HandDrawingSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["hand_draw"].queryset = HandDrawingExam.objects.filter(
-            college=self.context["request"].user.student.college
-        )
+        user = self.context["request"].user
+        if hasattr(user, "student"):
+            self.fields["hand_draw"].queryset = HandDrawingExam.objects.filter(
+                college=user.student.college
+            )
+        else:
+            self.fields["hand_draw"].queryset = HandDrawingExam.objects.none()
 
     def create(self, validated_data):
         validated_data["student"] = self.context["request"].user.student
@@ -207,9 +215,13 @@ class DigitalSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["digital_draw"].queryset = DigitalDrawingExam.objects.filter(
-            college=self.context["request"].user.student.college
-        )
+        user = self.context["request"].user
+        if hasattr(user, "student"):
+            self.fields["digital_draw"].queryset = DigitalDrawingExam.objects.filter(
+                college=user.student.college
+            )
+        else:
+            self.fields["digital_draw"].queryset = DigitalDrawingExam.objects.none()
 
     def create(self, validated_data):
         validated_data["student"] = self.context["request"].user.student
@@ -237,9 +249,13 @@ class PracticeSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["practice_draw"].queryset = PracticeDrawingExam.objects.filter(
-            college=self.context["request"].user.student.college
-        )
+        user = self.context["request"].user
+        if hasattr(user, "student"):
+            self.fields["practice_draw"].queryset = PracticeDrawingExam.objects.filter(
+                college=user.student.college
+            )
+        else:
+            self.fields["practice_draw"].queryset = PracticeDrawingExam.objects.none()
 
     def create(self, validated_data):
         validated_data["student"] = self.context["request"].user.student
@@ -278,9 +294,13 @@ class StudentResultsSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["user"].queryset = Student.objects.filter(
-            user_id=self.context["request"].user.id
-        )
+        user = self.context["request"].user
+        if hasattr(user, "student"):
+            self.fields["user"].queryset = Student.objects.filter(
+                college=user.student.college
+            )
+        else:
+            self.fields["user"].queryset = Student.objects.none()
 
     def create(self, validated_data):
         return StudentResults.objects.create(**validated_data)

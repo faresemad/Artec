@@ -27,11 +27,17 @@ class UserManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
+    STATUS_CHOICES = (
+        ("user", "User"),
+        ("student_review", "Student Review"),
+        ("student_rejected", "Student Rejected"),
+        ("student", "Student"),
+    )
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="user")
     objects = UserManager()
 
     USERNAME_FIELD = "email"

@@ -45,15 +45,17 @@ def practice_drawing_result(sender, instance, created, **kwargs):
     student_result.save()
 
 
-@receiver(post_save, sender=Student)
-def student_result(sender, instance, created, **kwargs):
-    notify.send(
-        sender=instance.user,
-        recipient=instance.user,
-        verb=f"تهانينا علي انضمامك الي كلية '{instance.college}'",
-        description=f"تم انشاء طالب جديد بإسم '{instance.full_name}'",
-        level="success",
-    )
+@receiver(post_save, sender=Student, dispatch_uid="student_status")
+def student_status(sender, instance, created, **kwargs):
+    if created:
+        instance.user.status = "student_review"
+        instance.user.save()
+        notify.send(
+            instance.user,
+            recipient=instance.user,
+            verb=f"تم التسجيل بنجاح في كلية {instance.college}",
+            description="يمكنك الآن تأدية الاختبارات الخاصة بالقبول في الكلية",
+        )
 
 
 @receiver(post_save, sender=Student, dispatch_uid="update_up_to_level")
@@ -61,20 +63,17 @@ def update_up_to_level(sender, instance, created, **kwargs):
     student_result, _ = StudentResults.objects.get_or_create(user=instance)
     student_result.up_to_level = instance.up_to_level
     student_result.save()
+    if instance.up_to_level == True:
+        instance.user.status = "student"
+        instance.user.save()
 
-    if student_result.up_to_level:
+
+@receiver(post_save, sender=User, dispatch_uid="user_approval")
+def check_user_approval(sender, instance, created, **kwargs):
+    if instance.status == "student":
         notify.send(
-            sender=instance.user,
-            recipient=instance.user,
-            verb=f"تهانينا{instance.full_name}",
-            description="انت الآن لائق للترقي لهذه الكلية",
-            level="success",
-        )
-    elif not student_result.up_to_level:
-        notify.send(
-            sender=instance.user,
-            recipient=instance.user,
-            verb=f"عذرا{instance.full_name}",
-            description="انت لست لائق للترقي لهذه الكلية",
-            level="error",
+            instance,
+            recipient=instance,
+            verb="تهانينا تم قبولك في الكلية",
+            description="تهانينا تم قبولك في الكلية و نتمنى لك التوفيق",
         )

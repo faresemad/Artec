@@ -9,7 +9,8 @@ User = get_user_model()
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "email", "name", "password")
+        fields = ("id", "email", "name", "password", "status")
+        read_only = ("id", "status")
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):

@@ -18,15 +18,3 @@ def send_welcome_notification(sender, instance, created, **kwargs):
             description="مرحبا بك في منصنتنا الجديدة",
             level="success",
         )
-
-
-@receiver(post_save, sender=Student)
-def send_notification(sender, instance, created, **kwargs):
-    if created:
-        notify.send(
-            sender=instance.user,
-            recipient=instance.user,
-            verb=f"تهانينا علي انضمامك الي كلية '{instance.college}'",
-            description=f"تم انشاء طالب جديد بإسم '{instance.full_name}'",
-            level="success",
-        )
