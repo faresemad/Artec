@@ -64,6 +64,9 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
     "UPDATE_LAST_LOGIN": True,
 }
+
+PROTOCOL = "http" if DEBUG else "https"
+DOMAIN = "localhost:8000" if DEBUG else "artech-api.herokuapp.com"
 # ----------------------------------------------------------------------
 JWT_AUTH = {
     "JWT_ENCODE_HANDLER": "rest_framework_jwt.utils.jwt_encode_handler",
